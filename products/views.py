@@ -16,8 +16,13 @@ def new_product(request):
         form = NewProductForm(data=request.POST, files=request.FILES)
         if form.is_valid():
             product = form.save(request)
+            productimages = []
             for image in request.FILES.getlist("images"):
-                ProductImage.objects.create(image=image, product=product)
+                productimages.append(ProductImage(image=image, product=product))
+            ProductImage.objects.bulk_create(
+                productimages
+            )
+            
             messages.success(request, "Successfully Created!")    
             return redirect('main:index')
         return render(request, 'product_new.html', {'form':form})
@@ -46,8 +51,12 @@ def product_update(request, product_id):
                 form.save()
                 if request.FILES.getlist('images'):
                     ProductImage.objects.filter(product=product).delete()
-                    for i in request.FILES.getlist('images'):
-                        ProductImage.objects.create(product=product, image=i)
+                    productimages = []
+                    for image in request.FILES.getlist("images"):
+                        productimages.append(ProductImage(image=image, product=product))
+                    ProductImage.objects.bulk_create(
+                        productimages
+                    )
                 messages.success(request, 'Successfully Updated!')        
                 return redirect('products:detail', product.id)
             return render(request, 'product_update.html', {'form':form, 'pr':product})
