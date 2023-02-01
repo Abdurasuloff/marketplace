@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}
+  E-Bazar - Saved Products of @{{request.user}}
+{% endblock title %}
+
+{% block content %}
+   <!-- Product Cart Start -->
+   <div class="container">
+    <div class=" w-100 mt-4">
+        <h4 class="d-block" >Saved Products of @{{request.user}}</h4>
+        <div class="d-flex flex-wrap justify-content-between">
+            {% for i in saveds %}
+            <!-- Product Cart Start -->
+            <div class="card border border-0 shadow-sm d-inline-block m-1 mt-3" style="width: 16.5rem;" >
+                {% if i.product.productimage_set.exists %}
+                <img height="200" class=" card-img-top" src="{{i.product.productimage_set.all.first.image.url}}" alt="">
+                {% else %}
+                <img height="200" class=" card-img-top" src="images/14pro2.jfif" alt="">
+                {% endif %}
+                <div class="card-body">
+                    <h6 class="align-center card-title">{{i.product.title}}</h6>
+                    <span class="center card-text"><small>$ {{i.product.price}}</small></span>
+                    <div class="buttons d-flex flex-wrap justify-content-between ">
+                        <i class="bi bi-bookmark-fill"></i> 
+                        <a href="{% url 'products:detail' i.product.id %}" class="btn btn-outline-primary" >Details</a>
+                    </div>
+                </div>
+            </div>  
+            <!-- Product Cart End -->
+            {% endfor %}
+            
+        </div>
+    </div>
+</div>
+<!-- Product Cart End -->
+{% endblock content %}

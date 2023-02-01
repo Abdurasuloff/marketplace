@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+  E-bazar - Login
+{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-6 mt-5 ">
+            <h2>Login here</h2>
+            <form  method="post" >{% csrf_token %}
+                {{form|crispy}}
+                <button type="submit" class="btn btn-primary" >Login</button>
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+  </div>
+{% endblock content %}

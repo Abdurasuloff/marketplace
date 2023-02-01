@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}
+  Update Product -{{pr.title}}
+{% endblock title %}
+
+{% block content %}
+  <div class="container">
+    <div class="row">
+        <div class="col"></div>
+        <div class="col-6 mt-5 ">
+            <h2>Update Product -{{pr.title}}</h2>
+            <form  method="post" enctype="multipart/form-data" >{% csrf_token %}
+                {{form|crispy}}
+                <button type="submit" class="btn btn-primary" >Submit</button>
+                <a class="btn btn-danger" href="{% url 'products:delete' pr.id  %}"> Delete</a>
+                <a class="btn btn-secondary" href="{% url 'products:detail' pr.id  %}"> Back Detail</a>
+            </form>
+        </div>
+        <div class="col"></div>
+    </div>
+  </div>
+{% endblock content %}
